@@ -1,5 +1,4 @@
-import axios from 'axios'
-import store from '../store'
+import axios from 'axios';
 
 const axiosInstance = axios.create({
 	baseURL: '/api',
@@ -14,14 +13,18 @@ axiosInstance.interceptors.request.use(function(config) {
 
 	return config;
 }, function(error) {
-	return Promise.reject(error)
+	return Promise.reject(error);
 });
 
 axiosInstance.interceptors.response.use(function(response) {
-	return response
+	return response;
 }, function(error) {
     var msg = ['抱歉', '服务器有点累,请您稍后重试'];
-    console.log(error);
+	
+	if(error.response==undefined) {
+		return Promise.reject(msg);
+	}
+	
 	// 响应状态码
 	switch (error.response.status) {
 		case 400: {
@@ -37,7 +40,7 @@ axiosInstance.interceptors.response.use(function(response) {
 			break;
 		}
 	}
-	return Promise.reject(error)
+	return Promise.reject(msg);
 });
 
 axiosInstance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
