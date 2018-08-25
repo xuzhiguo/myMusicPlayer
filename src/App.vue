@@ -1,10 +1,20 @@
 <template>
   <div id="app">
-    <drawer width="200px;" :show.sync="drawerVisibility" :show-mode="showModeValue" 
-        :placement="showPlacementValue" :drawer-style="{'background-color':'#35495e', width: '200px'}">
+    <drawer width="200px;" :show.sync="drawerVisibility" :show-mode="showModeValue"
+        :placement="showPlacementValue" :drawer-style="{'background-color':'#2ca2f9', width: '200px'}">
+        <div slot="drawer">
+          <!-- 菜单内容 -->
+          <group title="歌单" class="drawer-title">
+            <cell title="我喜欢" link="/demo" value="" @click.native="drawerVisibility = false"></cell>
+            <cell title="欧美范" link="/demo" value="" @click.native="drawerVisibility = false"></cell>
+          </group>
+        </div>
+
+
       <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="0">
-        <x-header slot="header" class="header" @on-click-back="back()" :left-options="leftOptions" 
-              :right-options="rightOptions" :title="title" @on-click-more="showMore()" >
+        <x-header slot="header" class="header"  :left-options="leftOptions" :right-options="rightOptions" :title="title">
+              <x-icon slot="overwrite-left" type="navicon" size="35" class="header-left-icon" @click.native="showMore()"></x-icon>
+              <x-icon slot="right" type="ios-search" size="35" class="header-right-icon" @click.native="showMore()"></x-icon>
           </x-header>
           <transition name="slide-left">
             <router-view class="child-view"></router-view>
@@ -15,11 +25,14 @@
 </template>
 
 <script>
-  import {Drawer, ViewBox, XHeader} from 'vux';
+  import {Drawer, Group, Cell, Badge, ViewBox, XHeader} from 'vux';
 
   export default {
     components: {
         Drawer,
+        Group,
+        Cell, 
+        Badge,
         ViewBox,
         XHeader
     },
@@ -38,7 +51,6 @@
 
       },
       showMore() {
-        console.log(111);
         this.drawerVisibility = true;
       }
     },
@@ -49,7 +61,7 @@
         switch (name) {
             case 'Home':
                 vm.title = '音乐';
-                return { showBack: false, preventGoBack: true, backText: ''};
+                return { showBack: true, preventGoBack: true, backText: ''};
                 break;
             default:
                 vm.title = '';
@@ -61,7 +73,7 @@
         let name = this.$route.name;
         switch (name) {
             case 'Home':
-                return { showMore: true };
+                return { showMore: false};
                 break;
             default:
                 return { showMore: false};
@@ -81,11 +93,29 @@
   }
 
   .header {
-      width:100%;
-      position: absolute !important;
-      left:0;
-      top:0;
-      z-index:100;
+    width:100%;
+    position: absolute !important;
+    left:0;
+    top:0;
+    z-index:100;
+  }
+  
+  .header-left-icon,
+  .header-right-icon {
+    fill:#fff;
+    position:relative;
+    top:-8px;
+    left:-3px;
+  }
+
+  .header-right-icon {
+    left: 3px;
+  }
+
+  .drawer-title .weui-cells__title{
+    line-height: 3rem;
+    color: #fff;
+    font-size: 1rem;
   }
 
   .child-view {

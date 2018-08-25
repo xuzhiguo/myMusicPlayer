@@ -1,40 +1,63 @@
 <template>
-   <div>
-        sagasgsag
-   </div>
+	<div>
+		<tab :line-width="1" custom-bar-width="60px">
+      <tab-item @on-item-click="changeNav" selected>首页</tab-item>
+      <tab-item @on-item-click="changeNav" >新歌</tab-item>
+      <tab-item @on-item-click="changeNav" >排行</tab-item>
+    </tab>
+		<swiper  dots-position="center">
+			<swiper-item class="swiper-nav" v-for="(item, index) in bannerList" :key="index">
+        <img :src="item" />
+      </swiper-item>
+		</swiper>
+		
+		<img src="../assets/images/banner1.jpg" />
+		<img :src="bannerList[0]" />
+	</div>
 </template>
 
 <script>
-    import http from "../http/index.js";
+	import {Tab, TabItem, Swiper, SwiperItem} from 'vux';
+	import http from "../http/index.js";
 
-    export default {
-        name: 'Home',
-        data () {
-            return {
+	export default {
+		name: 'Home',
+		data () {
+			return {
+				bannerList: ['../assets/images/banner1.jpg', '../assets/images/banner2.jpg', '../assets/images/banner3.jpg']
+			}
+		},
+		components: {
+			Tab,
+			TabItem,
+			Swiper,
+			SwiperItem
+		},
+		methods: {
+			changeNav() {
 
-            }
-        },
-        components: {
-
-        },
-        created() {
-            // this.$vux.loading.show();
-            http.get('/213-4',{
-                params: {
-                    topid: 4
-                }
-            })
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        }
-    }
+			}
+		},
+		created() {
+			// this.$vux.loading.show();
+			http.get('/213-4',{
+					params: {
+							topid: 4
+					}
+			})
+			.then((res) => {
+					console.log(res);
+			})
+			.catch((err) => {
+					console.log(err);
+			});
+		}
+	}
 </script>
 
 <style lang="less" scoped>
-
+.swiper-nav img {
+	width: 100%;
+}
  
 </style>
