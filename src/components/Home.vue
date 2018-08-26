@@ -1,18 +1,15 @@
 <template>
 	<div>
 		<tab :line-width="1" custom-bar-width="60px">
-      <tab-item @on-item-click="changeNav" selected>首页</tab-item>
-      <tab-item @on-item-click="changeNav" >新歌</tab-item>
-      <tab-item @on-item-click="changeNav" >排行</tab-item>
-    </tab>
+			<tab-item @on-item-click="changeNav" selected>首页</tab-item>
+			<tab-item @on-item-click="changeNav" >新歌</tab-item>
+			<tab-item @on-item-click="changeNav" >排行</tab-item>
+		</tab>
 		<swiper  dots-position="center">
 			<swiper-item class="swiper-nav" v-for="(item, index) in bannerList" :key="index">
-        <img :src="item" />
-      </swiper-item>
+				<img :src="item" />
+			</swiper-item>
 		</swiper>
-		
-		<img src="../assets/images/banner1.jpg" />
-		<img :src="bannerList[0]" />
 	</div>
 </template>
 
@@ -24,7 +21,7 @@
 		name: 'Home',
 		data () {
 			return {
-				bannerList: ['../assets/images/banner1.jpg', '../assets/images/banner2.jpg', '../assets/images/banner3.jpg']
+				bannerList: ['static/img/banner1.jpg', 'static/img/banner2.jpg', 'static/img/banner3.jpg']
 			}
 		},
 		components: {
